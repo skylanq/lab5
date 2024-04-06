@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <math.h>
+#include "func.h"
+
+int main(){
+    int i, j, k, N;
+    double **m1, **m2,**res;
+    char operation;
+
+
+    printf("Выберите операцию: +,-,*:\n");
+    scanf("%c", &operation);
+
+    printf("Введите размер матрицы:\n");
+    scanf("%d", &N);
+
+    double crmatrix(double **m, int n){
+    m=(double**)malloc(N*sizeof(double*));
+    for(int i=0;i<N;i++){
+        m[i]= (double*)malloc(N*sizeof(double));
+    }
+    return m;
+    }
+    m1 = crmatrix(m1,n);
+    m2 = crmatrix(m2,n);
+    printf("Введите данные для первой матрицы:\n");
+    for (i=0;i<N;i++){
+        for (j=0;j<N;j++){
+            scanf("%lf", &m1[i][j]);   
+        }
+    }
+
+    printf("Введите данные для второй матрицы:\n");
+    for (i=0;i<N;i++){
+        for (j=0;j<N;j++){
+            scanf("%lf", &m2[i][j]);   
+        }
+    }
+
+
+    printf("Результат:\n");
+
+    res = matrix_op(m1,m2,operation,N);
+    for (i=0;i<N;i++){
+        for (j=0;j<N;j++){
+            printf("%0.0lf ", res[i][j]);   
+        }
+        printf("\n");
+    }
+
+    for(i=0;i<N;i++)
+    {free(m1[i]);}
+    free(m1);
+
+    for(i=0;i<N;i++)
+    {free(m2[i]);}
+    free(m2);
+
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+double **matrix_op(double **m1, double **m2, char operation, int N){
+    double **result = (double**)malloc(N * sizeof(double*));
+    for(int i=0; i<N; i++){
+        result[i] = (double*)malloc(N * sizeof(double));
+    }
+
+    if (operation == '+'){
+        for (int i=0; i<N; i++){
+            for (int j=0; j<N; j++){
+                result[i][j] = m1[i][j] + m2[i][j];
+            }    
+        }
+    }
+
+    if (operation == '-'){
+        for (int i=0; i<N; i++){
+            for (int j=0; j<N; j++){
+                result[i][j] = m1[i][j] - m2[i][j];
+            }    
+        }
+    }
+
+    if (operation == '*'){
+        for (int i=0; i<N; i++) {
+            for (int j=0; j<N; j++){
+                result[i][j] = 0;
+                for (int k=0; k<N; k++){
+                    result[i][j] += m1[i][k] * m2[k][j];
+                }   
+            }
+        }
+    }
+
+    return result;
+}
+
+
+    return 0;
+}
